@@ -4,23 +4,18 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Shop from "./pages/Shop";
-import Blog from "./pages/Blog";
-import Generator from "./pages/Generator"; // Add this import
+import Tips from "./pages/Tips";
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen">
         <Header />
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/generator" element={<Generator />} />{" "}
-            {/* Add this route */}
+            <Route path="/tips" element={<Tips />} />
           </Routes>
         </main>
         <Footer />
