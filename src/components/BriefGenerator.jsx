@@ -318,9 +318,9 @@ const BriefGenerator = () => {
                   <h4 className="text-lg font-medium text-gray-200">
                     Your Brief Awaits
                   </h4>
-                  <p className="text-gray-400 mt-2 max-w-md">
-                    Fill out the form and generate a professional business brief
-                    tailored to your needs
+                  <p className="text-gray-400 mt-2 text-sm">
+                    Fill out the form and generate a professional brief tailored
+                    to your needs
                   </p>
                 </div>
               )}
