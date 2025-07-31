@@ -43,7 +43,9 @@ const Footer = () => {
           </div>
 
           <div className="mt-2 text-xs text-gray-600">
-            <p>© {new Date().getFullYear()} Goodbrief. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Betterbrief. All rights reserved.
+            </p>
           </div>
         </div>
       </div>
