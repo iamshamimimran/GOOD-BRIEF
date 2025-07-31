@@ -12,3 +12,16 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 6px;
+}
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #6b7280;
+}

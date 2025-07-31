@@ -6,6 +6,10 @@ import {
   FaDownload,
   FaIndustry,
   FaBriefcase,
+  FaRobot,
+  FaBuilding,
+  FaClipboardList,
+  FaFileAlt,
 } from "react-icons/fa";
 import { marked } from "marked";
 import { generateBrief } from "../api/gemini";
@@ -122,38 +126,47 @@ const BriefGenerator = () => {
   }, [generatedBrief]);
 
   return (
-    <section className="py-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-3">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">
-            AI-Powered <span>Business Brief Generator</span>
-          </h2>
-          <p className="text-xs italic text-gray-600 max-w-3xl mx-auto">
-            Get a professional business brief tailored to your industry and
-            project needs in seconds.
+    <section className="py-2 min-h-screen bg-gray-900">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center">
+            <FaRobot className="text-3xl text-green-500 mr-3" />
+            <h2 className="text-2xl font-bold text-white">
+              AI-Powered Brief Generator
+            </h2>
+          </div>
+          <p className="text-gray-400 mt-3 max-w-3xl mx-auto">
+            Get a professional brief tailored to your industry and project needs
+            in seconds.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Form Section */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-            <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-start">
+          {/* Form Section - Dark Theme */}
+          <div className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {/* Industry */}
               <div>
-                <label className=" text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
-                  <FaIndustry className="text-green-600" />
+                <label className="text-sm font-medium text-gray-300 mb-2 flex items-center space-x-2">
+                  <FaIndustry className="text-green-400" />
                   <span>Select Industry *</span>
                 </label>
                 <select
                   name="industry"
                   value={formData.industry}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700"
+                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-200"
                   required
                 >
-                  <option value="">Choose your industry...</option>
+                  <option value="" className="text-gray-400">
+                    Choose your industry...
+                  </option>
                   {industries.map((industry) => (
-                    <option key={industry} value={industry}>
+                    <option
+                      key={industry}
+                      value={industry}
+                      className="text-gray-200 bg-gray-800"
+                    >
                       {industry}
                     </option>
                   ))}
@@ -162,20 +175,26 @@ const BriefGenerator = () => {
 
               {/* Job Type */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
-                  <FaBriefcase className="text-green-600" />
+                <label className="text-sm font-medium text-gray-300 mb-2 flex items-center space-x-2">
+                  <FaBriefcase className="text-green-400" />
                   <span>Select Job Type *</span>
                 </label>
                 <select
                   name="jobType"
                   value={formData.jobType}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700"
+                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-200"
                   required
                 >
-                  <option value="">Choose job type...</option>
+                  <option value="" className="text-gray-400">
+                    Choose job type...
+                  </option>
                   {jobTypes.map((jobType) => (
-                    <option key={jobType} value={jobType}>
+                    <option
+                      key={jobType}
+                      value={jobType}
+                      className="text-gray-200 bg-gray-800"
+                    >
                       {jobType}
                     </option>
                   ))}
@@ -184,46 +203,50 @@ const BriefGenerator = () => {
 
               {/* Company Info */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  Company Information (Optional)
+                <label className="text-sm font-medium text-gray-300 mb-2 flex items-center space-x-2">
+                  <FaBuilding className="text-green-400" />
+                  <span>Company Information (Optional)</span>
                 </label>
                 <textarea
                   name="companyInfo"
                   value={formData.companyInfo}
                   onChange={handleInputChange}
                   placeholder="Brief description of your company, target audience, or specific requirements..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none"
-                  rows="4"
+                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-200 resize-none"
+                  rows="3"
                 />
               </div>
 
               {/* Additional Requirements */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  Additional Requirements (Optional)
+                <label className="text-sm font-medium text-gray-300 mb-2 flex items-center space-x-2">
+                  <FaClipboardList className="text-green-400" />
+                  <span>Additional Requirements (Optional)</span>
                 </label>
                 <textarea
                   name="additionalRequirements"
                   value={formData.additionalRequirements}
                   onChange={handleInputChange}
                   placeholder="Any specific features, timeline, budget constraints, or special requests..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none"
-                  rows="3"
+                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-200 resize-none"
+                  rows="2"
                 />
               </div>
 
               {/* Error */}
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <p className="text-red-600 text-sm">{error}</p>
+                <div className="bg-red-900/30 border border-red-700 rounded-lg p-3">
+                  <p className="text-red-400 flex items-center">
+                    <FaExclamationCircle className="mr-2" /> {error}
+                  </p>
                 </div>
               )}
 
-              {/* Submit */}
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-green-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                className="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-lg shadow-green-500/20"
               >
                 {isLoading ? (
                   <>
@@ -240,24 +263,24 @@ const BriefGenerator = () => {
             </form>
           </div>
 
-          {/* Results Section */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-900">
-                Generated Brief
-              </h3>
+          {/* Results Section - Dark Theme */}
+          <div className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-xl text-white ">Generated Brief</h3>
+
               {generatedBrief && (
                 <div className="flex space-x-2">
                   <button
                     onClick={copyToClipboard}
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-lg transition-colors"
+                    className="bg-gray-700 hover:bg-gray-600 text-gray-300 p-2 rounded-lg transition-colors"
                     title="Copy to clipboard"
                   >
                     <FaCopy />
                   </button>
                   <button
                     onClick={downloadBrief}
-                    className="bg-green-100 hover:bg-green-200 text-green-700 p-2 rounded-lg transition-colors"
+                    className="bg-gradient-to-r from-green-700 to-blue-700 text-gray-100 p-2 rounded-lg hover:opacity-90 transition-opacity"
                     title="Download as text file"
                   >
                     <FaDownload />
@@ -266,35 +289,39 @@ const BriefGenerator = () => {
               )}
             </div>
 
-            <div className="min-h-96">
+            {/* Result Content */}
+            <div className="h-[480px] relative">
               {isLoading ? (
-                <div className="flex items-center justify-center h-96">
-                  <div className="text-center">
-                    <FaSpinner className="animate-spin text-4xl text-green-600 mx-auto mb-4" />
-                    <p className="text-gray-600">
-                      AI is crafting your perfect brief...
-                    </p>
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500 rounded-full blur-lg opacity-20 animate-pulse"></div>
+                    <FaSpinner className="animate-spin text-4xl text-green-400 relative z-10" />
                   </div>
+                  <p className="text-gray-400 mt-4">
+                    AI is crafting your perfect brief...
+                  </p>
                 </div>
               ) : generatedBrief ? (
-                <div className="prose max-w-none">
-                  <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <div className="bg-gray-700/50 rounded-lg border border-gray-600 h-full overflow-hidden">
+                  <div className="h-full overflow-y-auto p-5 custom-scrollbar">
                     <div
-                      className="prose max-w-none text-sm text-gray-800 leading-relaxed"
+                      className="text-gray-300 leading-relaxed prose prose-invert"
                       dangerouslySetInnerHTML={{ __html: formattedBriefHtml }}
                     ></div>
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-96 text-center">
-                  <div className="text-gray-400">
-                    <FaBriefcase className="text-4xl mx-auto mb-4" />
-                    <p>Your AI-generated brief will appear here</p>
-                    <p className="text-sm mt-2">
-                      Fill out the form and click "Generate Brief" to get
-                      started
-                    </p>
+                <div className="flex flex-col items-center justify-center h-full text-center p-6 border-2 border-dashed border-gray-700 rounded-xl">
+                  <div className="bg-gray-900 p-4 rounded-full mb-4">
+                    <FaFileAlt className="text-3xl text-green-400" />
                   </div>
+                  <h4 className="text-lg font-medium text-gray-200">
+                    Your Brief Awaits
+                  </h4>
+                  <p className="text-gray-400 mt-2 max-w-md">
+                    Fill out the form and generate a professional business brief
+                    tailored to your needs
+                  </p>
                 </div>
               )}
             </div>
