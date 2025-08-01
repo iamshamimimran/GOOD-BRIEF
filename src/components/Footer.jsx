@@ -14,6 +14,11 @@ const Footer = () => {
               <span className="ml-1 font-medium text-gray-300">
                 Shamim Imran
               </span>
+
+              <span className="ml-1 text-gray-500">with</span>
+              <span className="ml-1 font-medium text-gray-300">
+                Chand Prakash Singh
+              </span>
             </div>
 
             <div className="hidden md:block w-px h-2 bg-gray-700"></div>

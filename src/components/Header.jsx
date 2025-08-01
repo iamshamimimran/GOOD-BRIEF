@@ -62,7 +62,7 @@ const Header = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 group">
-              <div className="group-hover:rotate-5 transition-transform">
+              <div className="group-hover:rotate-9 transition-transform">
                 <img src="/brief.svg" alt="logo" className="h-8" />
               </div>
               <span className="text-2xl font-bold text-white">BetterBrief</span>
