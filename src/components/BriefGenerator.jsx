@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { marked } from "marked";
 import { generateBrief } from "../api/gemini";
+import BriefQualityAnalyzer from "./BriefQualityAnalyzer";
 
 const BriefGenerator = () => {
   const [formData, setFormData] = useState({
@@ -232,6 +233,7 @@ const BriefGenerator = () => {
                   rows="2"
                 />
               </div>
+              <BriefQualityAnalyzer formData={formData} />
 
               {/* Error */}
               {error && (
