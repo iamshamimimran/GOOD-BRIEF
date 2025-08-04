@@ -1,12 +1,4 @@
-import React from "react";
-
-const REQUIRED_FIELDS = [
-  { name: "companyInfo", label: "Company Info" },
-  { name: "additionalRequirements", label: "Additional Requirements" },
-];
-
 const BriefQualityAnalyzer = ({ formData }) => {
-  // Example: basic scoring (tailor to your form fields)
   let score = 0;
   if (formData.industry) score += 25;
   if (formData.jobType) score += 25;
