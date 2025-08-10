@@ -5,11 +5,13 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Tips from "./pages/Tips";
+import NotificationModal from "./components/NotificationModal";
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen">
+        <NotificationModal />
         <Header />
         <main>
           <Routes>
