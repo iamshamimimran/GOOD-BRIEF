@@ -12,7 +12,6 @@ import {
   FaFileAlt,
 } from "react-icons/fa";
 import { marked } from "marked";
-import { generateBrief } from "../api/gemini";
 import BriefQualityAnalyzer from "./BriefQualityAnalyzer";
 
 const BriefGenerator = () => {
@@ -83,24 +82,50 @@ const BriefGenerator = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.industry || !formData.jobType) {
-      setError("Please select both industry and job type");
+    const { industry, jobType, companyInfo, additionalRequirements } = formData;
+
+    // Validate required fields
+    if (!industry || !jobType) {
+      setError("Please select both industry and job type.");
       return;
     }
 
+    // Prepare full context
+    const fullContext = [companyInfo, additionalRequirements]
+      .filter(Boolean)
+      .join(" ")
+      .trim();
+
+    // Reset state before request
     setIsLoading(true);
     setError("");
     setGeneratedBrief("");
 
     try {
-      const brief = await generateBrief(
-        formData.industry,
-        formData.jobType,
-        `${formData.companyInfo} ${formData.additionalRequirements}`.trim()
+      const response = await fetch(
+        "https://better-brief-backend.onrender.com/generate-brief",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            industry,
+            jobType,
+            companyInfo: fullContext,
+          }),
+        }
       );
-      setGeneratedBrief(brief);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setGeneratedBrief(data.brief);
     } catch (err) {
-      setError(err.message || "Something went wrong.");
+      setError(err.message || "An unexpected error occurred.");
     } finally {
       setIsLoading(false);
     }
