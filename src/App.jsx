@@ -6,11 +6,14 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Tips from "./pages/Tips";
 import NotificationModal from "./components/NotificationModal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen">
+        <ToastContainer theme="dark" />
         <NotificationModal />
         <Header />
         <main>

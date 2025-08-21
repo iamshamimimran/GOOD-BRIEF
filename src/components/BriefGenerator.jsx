@@ -10,8 +10,11 @@ import {
   FaBuilding,
   FaClipboardList,
   FaFileAlt,
+  FaExclamationCircle,
+  FaExclamationTriangle,
 } from "react-icons/fa";
 import { marked } from "marked";
+import { toast } from "react-toastify";
 import BriefQualityAnalyzer from "./BriefQualityAnalyzer";
 
 const BriefGenerator = () => {
@@ -87,6 +90,7 @@ const BriefGenerator = () => {
     // Validate required fields
     if (!industry || !jobType) {
       setError("Please select both industry and job type.");
+      toast.error("Please select both industry and job type.");
       return;
     }
 
@@ -120,12 +124,46 @@ const BriefGenerator = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Something went wrong.");
+        // Check if it's an overload error (503 status)
+        if (response.status === 503 || data.error?.includes("overloaded")) {
+          const overloadMessage =
+            "🚀 AI model is experiencing high demand! Please try again in a few moments.";
+          setError(overloadMessage);
+          toast.error(overloadMessage, {
+            position: "top-right",
+            autoClose: 6000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            icon: <FaExclamationTriangle className="text-orange-500" />,
+          });
+        } else {
+          throw new Error(data.error || "Something went wrong.");
+        }
+        return;
       }
 
       setGeneratedBrief(data.brief);
+      toast.success("Brief generated successfully! 🎉", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } catch (err) {
-      setError(err.message || "An unexpected error occurred.");
+      const errorMessage = err.message || "An unexpected error occurred.";
+      setError(errorMessage);
+      toast.error(`Error: ${errorMessage}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -133,7 +171,14 @@ const BriefGenerator = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedBrief);
-    // Optionally show a toast here
+    toast.success("Brief copied to clipboard! 📋", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   const downloadBrief = () => {
@@ -144,6 +189,15 @@ const BriefGenerator = () => {
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+
+    toast.success("Brief downloaded successfully! 📥", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   // ✅ Memoize markdown conversion to avoid re-parsing on every render
@@ -260,15 +314,6 @@ const BriefGenerator = () => {
               </div>
               <BriefQualityAnalyzer formData={formData} />
 
-              {/* Error */}
-              {error && (
-                <div className="bg-red-900/30 border border-red-700 rounded-lg p-3">
-                  <p className="text-red-400 flex items-center">
-                    <FaExclamationCircle className="mr-2" /> {error}
-                  </p>
-                </div>
-              )}
-
               {/* Submit Button */}
               <button
                 type="submit"
@@ -294,7 +339,7 @@ const BriefGenerator = () => {
           <div className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700">
             {/* Header */}
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-xl text-white ">Generated Brief</h3>
+              <h3 className="text-xl text-white">Generated Brief</h3>
 
               {generatedBrief && (
                 <div className="flex space-x-2">
