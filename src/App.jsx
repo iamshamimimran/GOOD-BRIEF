@@ -8,6 +8,7 @@ import Tips from "./pages/Tips";
 import NotificationModal from "./components/NotificationModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PromptImprover from "./components/PromptImprover";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/tips" element={<Tips />} />
+            <Route path="/better-prompt" element={<PromptImprover />} />
           </Routes>
         </main>
         <Footer />

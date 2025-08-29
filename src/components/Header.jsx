@@ -41,6 +41,11 @@ const Header = () => {
 
   const navItems = [
     { path: "/", label: "Home", icon: <FiHome className="md:hidden" /> },
+    {
+      path: "/better-prompt",
+      label: "Prompt Improver",
+      icon: <FaRegLightbulb className="md:hidden" />,
+    },
     { path: "/about", label: "About", icon: <FiInfo className="md:hidden" /> },
     {
       path: "/tips",
